@@ -1,6 +1,3 @@
-// TO-DO:
-// Organizar código-fonte
-
 const diaSemana = document.getElementById("dia-semana");
 const diaMesAno = document.getElementById("dia-mes-ano");
 const horaMinSeg = document.getElementById("hora-min-seg");
@@ -32,7 +29,6 @@ const divAlertaRegistroPonto = document.getElementById("alerta-registro-ponto");
 diaSemana.textContent = getWeekDay();
 diaMesAno.textContent = getCurrentDate();
 
-
 async function getCurrentPosition() {
     return new Promise((resolve, reject) => {
         navigator.geolocation.getCurrentPosition((position) => {
@@ -48,8 +44,6 @@ async function getCurrentPosition() {
     });
 }
 
-// TO-DO:
-// Problema: os 5 segundos continuam contando
 const btnCloseAlertRegister = document.getElementById("alerta-registro-ponto-fechar");
 btnCloseAlertRegister.addEventListener("click", () => {
     divAlertaRegistroPonto.classList.remove("show");
@@ -58,22 +52,33 @@ btnCloseAlertRegister.addEventListener("click", () => {
 
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
 btnDialogBaterPonto.addEventListener("click", async () => {
-    const typeRegister = document.getElementById("tipos-ponto");
-    let lastTypeRegister = localStorage.getItem("lastTypeRegister");
+    const dataPonto = document.getElementById("data-ponto").value;
 
-    console.log(lastTypeRegister);
+    if (!dataPonto) {
+        alert("Por favor, escolha uma data e hora.");
+        return;
+    }
+
+    const selectedDate = new Date(dataPonto);
+    const currentDate = new Date();
+
+    // Verifica se a data escolhida é futura
+    if (selectedDate > currentDate) {
+        alert("Você não pode registrar pontos em datas futuras.");
+        return;
+    }
+
+    const typeRegister = document.getElementById("tipos-ponto");
 
     let userCurrentPosition = await getCurrentPosition();
 
     let ponto = {
-        "data": getCurrentDate(),
-        "hora": getCurrentHour(),
+        "data": selectedDate.toLocaleDateString(),
+        "hora": selectedDate.toLocaleTimeString(),
         "localizacao": userCurrentPosition,
         "id": 1,
         "tipo": typeRegister.value
     }
-
-    console.log(ponto);
 
     saveRegisterLocalStorage(ponto);
 
@@ -89,7 +94,6 @@ btnDialogBaterPonto.addEventListener("click", async () => {
         divAlertaRegistroPonto.classList.remove("show");
         divAlertaRegistroPonto.classList.add("hidden");
     }, 5000);
-
 });
 
 function saveRegisterLocalStorage(register) {
@@ -102,29 +106,26 @@ function saveRegisterLocalStorage(register) {
 function getRegisterLocalStorage() {
     let registers = localStorage.getItem("register");
 
-    if(!registers) {
+    if (!registers) {
         return [];
     }
 
     return JSON.parse(registers); 
 }
 
-// TO-DO:
-// alterar o nome da função
 function register() {
     dialogData.textContent = "Data: " + getCurrentDate();
     dialogHora.textContent = "Hora: " + getCurrentHour();
     
     let lastTypeRegister = localStorage.getItem("lastTypeRegister");
-    if(lastTypeRegister) {
-        const typeRegister   = document.getElementById("tipos-ponto");
-        typeRegister.value   = nextRegister[lastTypeRegister];
-        let lastRegisterText = "Último registro: " + localStorage.getItem("lastDateRegister") + " - " + localStorage.getItem("lastTimeRegister") + " | " + localStorage.getItem("lastTypeRegister")
+    if (lastTypeRegister) {
+        const typeRegister = document.getElementById("tipos-ponto");
+        typeRegister.value = nextRegister[lastTypeRegister];
+        let lastRegisterText = "Último registro: " + localStorage.getItem("lastDateRegister") + " - " + localStorage.getItem("lastTimeRegister") + " | " + localStorage.getItem("lastTypeRegister");
         document.getElementById("dialog-last-register").textContent = lastRegisterText;
     }
 
-    // TO-DO
-    // Como "matar" o intervalo a cada vez que o dialog é fechado?
+
     setInterval(() => {
         dialogHora.textContent = "Hora: " + getCurrentHour();
     }, 1000);
@@ -151,6 +152,25 @@ function getCurrentDate() {
 function printCurrentHour() {
     horaMinSeg.textContent = getCurrentHour();
 }
+
+const btnDataHoraAtual = document.getElementById("btn-data-hora-atual");
+btnDataHoraAtual.addEventListener("click", () => {
+    const dataPonto = document.getElementById("data-ponto");
+    const now = new Date();
+    
+
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0'); 
+    const day = String(now.getDate()).padStart(2, '0');
+    const hours = String(now.getHours()).padStart(2, '0');
+    const minutes = String(now.getMinutes()).padStart(2, '0');
+
+
+    const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
+
+
+    dataPonto.value = formattedDate;
+});
 
 printCurrentHour();
 setInterval(printCurrentHour, 1000);

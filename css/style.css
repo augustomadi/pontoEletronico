@@ -1,3 +1,9 @@
+* {
+    font-family: "Nanum Gothic Coding", monospace;
+    font-style: normal;
+    font-weight: bold;
+}
+
 .data-hora {
     text-align: center;
     font-family: "Nanum Gothic Coding", monospace;
@@ -58,12 +64,32 @@
 }
 
 .data-hora p {
-    font-size: 2rem; 
+    font-size: rem; 
 }
+
+#dialog-ponto label,
+#dialog-ponto input[type="datetime-local"] {
+    display: block;
+    margin: 10px 0;
+    text-align: center;
+}
+
+#dialog-ponto {
+    text-align: center; 
+}
+
+#dialog-ponto label,
+#dialog-ponto input[type="datetime-local"],
+#dialog-ponto button {
+    margin: 10px auto;
+    display: block;
+}
+
 
 #dialog-ponto p {
     font-size: 1.5rem;
     text-align: center;
+    
 }
 
 #dialog-ponto select {
