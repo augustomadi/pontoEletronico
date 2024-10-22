@@ -2,27 +2,19 @@
 
 
 function renderList() {
-    registers = JSON.parse(localStorage.getItem("register"));
+    const registers = JSON.parse(localStorage.getItem("register")) || [];
 
     registers.forEach(register => {
         console.log(register);
 
-        // Padrão de apresentação
-        // > 08/10/2024
-        // Entrada | 08:00:35 | Obs | Anexo | Editar | Excluir
-
-        // [!]
-        // iterar a lista de registros e criar as entradas
-
-        // [?]
         const divRegistro = document.createElement("div");
-        
-        // [?]
-        divRegistro.innerHTML = `<p>${register.date}</p>`;    
+        divRegistro.innerHTML = `
+            <p>${register.data} - ${register.hora} | ${register.tipo}</p>
+            <p>Comentário: ${register.comentario || "Nenhum comentário"}</p>
+        `;
 
-        //[?]
+        document.getElementById("registros-relatorio").appendChild(divRegistro);
     });
-
 }
 
 renderList();

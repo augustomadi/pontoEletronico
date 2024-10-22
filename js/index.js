@@ -50,9 +50,32 @@ btnCloseAlertRegister.addEventListener("click", () => {
     divAlertaRegistroPonto.classList.add("hidden");
 });
 
+function getNextId() {
+  
+    let lastId = localStorage.getItem("lastId");
+
+    if (!lastId) {
+        lastId = 0; 
+    }
+
+   
+    const nextId = parseInt(lastId) + 1;
+
+    localStorage.setItem("lastId", nextId);
+
+    return nextId;
+}
+
+
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
+const selectTipoPonto = document.getElementById("tipos-ponto");
+const comentarioPonto = document.getElementById("comentario-ponto");
+
+
 btnDialogBaterPonto.addEventListener("click", async () => {
     const dataPonto = document.getElementById("data-ponto").value;
+    const typeRegister = document.getElementById("tipos-ponto").value;
+    const comentario = document.getElementById("comentario-ponto").value.trim();
 
     if (!dataPonto) {
         alert("Por favor, escolha uma data e hora.");
@@ -62,23 +85,28 @@ btnDialogBaterPonto.addEventListener("click", async () => {
     const selectedDate = new Date(dataPonto);
     const currentDate = new Date();
 
-    // Verifica se a data escolhida é futura
     if (selectedDate > currentDate) {
         alert("Você não pode registrar pontos em datas futuras.");
         return;
     }
 
-    const typeRegister = document.getElementById("tipos-ponto");
+    if (typeRegister === "falta" && !comentario) {
+        alert("Em caso de falta, escreva sua justificativa.");
+        return;
+    }
 
     let userCurrentPosition = await getCurrentPosition();
 
+    let pontoId = getNextId();
+
     let ponto = {
+        "id": pontoId, 
         "data": selectedDate.toLocaleDateString(),
         "hora": selectedDate.toLocaleTimeString(),
         "localizacao": userCurrentPosition,
-        "id": 1,
-        "tipo": typeRegister.value
-    }
+        "tipo": typeRegister,
+        "comentario": comentario 
+    };
 
     saveRegisterLocalStorage(ponto);
 
@@ -158,16 +186,13 @@ btnDataHoraAtual.addEventListener("click", () => {
     const dataPonto = document.getElementById("data-ponto");
     const now = new Date();
     
-
     const year = now.getFullYear();
     const month = String(now.getMonth() + 1).padStart(2, '0'); 
     const day = String(now.getDate()).padStart(2, '0');
     const hours = String(now.getHours()).padStart(2, '0');
     const minutes = String(now.getMinutes()).padStart(2, '0');
 
-
     const formattedDate = `${year}-${month}-${day}T${hours}:${minutes}`;
-
 
     dataPonto.value = formattedDate;
 });

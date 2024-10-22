@@ -28,14 +28,20 @@
     
         <label for="data-ponto">Escolha a data e hora:</label>
         <input type="datetime-local" id="data-ponto" class="data-hora-selector">
-        <button id="btn-data-hora-atual">Data Atual</button> <!-- Botão para selecionar a data e hora atuais -->
-        <label for="data-ponto">Escolha o tipo do ponto:</label>
-        <select name="tipos-ponto" id="tipos-ponto">
+        <button id="btn-data-hora-atual">Agora</button>
+    
+        <select name="tipos-ponto" id="tipos-ponto" required>
             <option value="entrada">Entrada</option>
             <option value="intervalo">Intervalo</option>
             <option value="volta-intervalo">Volta Intervalo</option>
             <option value="saida">Saída</option>
+            <option value="falta">Falta</option>
         </select>
+    
+    
+        <label for="comentario-ponto">Comentário (opcional):</label>
+        <textarea id="comentario-ponto" rows="4" placeholder="Adicione um comentário..."></textarea>
+    
         <button id="btn-dialog-bater-ponto">Registrar ponto</button>
     
         <p id="dialog-last-register"></p>
