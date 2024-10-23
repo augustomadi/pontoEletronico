@@ -67,7 +67,8 @@ function getNextId() {
 
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
 const selectTipoPonto = document.getElementById("tipos-ponto");
-const comentarioPonto = document.getElementById("comentario-ponto");
+const DivcomentarioPonto = document.getElementById("div-comentario-ponto");
+const comentarioPonto = document.getElementById("comentario-ponto"); 
 const divAnexoImagem = document.getElementById("div-anexo-imagem");
 const inputAnexoImagem = document.getElementById("anexo-imagem");
 
@@ -75,15 +76,21 @@ const inputAnexoImagem = document.getElementById("anexo-imagem");
 selectTipoPonto.addEventListener("change", function() {
     if (this.value === "falta") {
         divAnexoImagem.style.display = "block";  // Mostra o campo de anexo de imagem
+        DivcomentarioPonto.style.display = "block"; // Mostra o campo de comentário para "Falta"
     } else {
         divAnexoImagem.style.display = "none";  // Esconde o campo de anexo de imagem
+        DivcomentarioPonto.style.display = "none"; // Esconde o campo de comentário para outros tipos de ponto
     }
 });
 
 btnDialogBaterPonto.addEventListener("click", async () => {
     const dataPonto = document.getElementById("data-ponto").value;
     const typeRegister = document.getElementById("tipos-ponto").value;
-    const comentario = document.getElementById("comentario-ponto").value.trim();
+    
+    // Verifica se o campo de comentário está presente e captura seu valor
+    const comentarioElemento = document.getElementById("comentario-ponto");
+    const comentario = comentarioElemento && comentarioElemento.style.display !== 'none' ? comentarioElemento.value.trim() : null;
+    
     const anexoImagem = document.getElementById("anexo-imagem").files[0];  // Captura o arquivo de imagem
 
     if (!dataPonto) {
@@ -114,7 +121,7 @@ btnDialogBaterPonto.addEventListener("click", async () => {
         "hora": selectedDate.toLocaleTimeString(),
         "localizacao": userCurrentPosition,
         "tipo": typeRegister,
-        "comentario": comentario,
+        "comentario": comentario ? comentario : null,
         "imagem": anexoImagem ? anexoImagem.name : null  // Se houver imagem, salva o nome dela
     };
 
