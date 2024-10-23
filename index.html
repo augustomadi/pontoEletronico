@@ -37,10 +37,14 @@
             <option value="saida">Saída</option>
             <option value="falta">Falta</option>
         </select>
-    
-    
+
         <label for="comentario-ponto">Comentário (opcional):</label>
         <textarea id="comentario-ponto" rows="4" placeholder="Adicione um comentário..."></textarea>
+    
+        <div id="div-anexo-imagem" style="display: none;">
+            <label for="anexo-imagem">Anexar imagem (somente em caso de falta):</label>
+            <input type="file" id="anexo-imagem" accept="image/*">
+        </div>
     
         <button id="btn-dialog-bater-ponto">Registrar ponto</button>
     

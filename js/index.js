@@ -16,7 +16,8 @@ const nextRegister = {
     "entrada": "intervalo",
     "intervalo": "volta-intervalo", 
     "volta-intervalo": "saida", 
-    "saida": "entrada"
+    "saida": "entrada",
+    "falta": "entrada"
 }
 
 let registerLocalStorage = getRegisterLocalStorage();
@@ -51,14 +52,12 @@ btnCloseAlertRegister.addEventListener("click", () => {
 });
 
 function getNextId() {
-  
     let lastId = localStorage.getItem("lastId");
 
     if (!lastId) {
         lastId = 0; 
     }
 
-   
     const nextId = parseInt(lastId) + 1;
 
     localStorage.setItem("lastId", nextId);
@@ -66,16 +65,26 @@ function getNextId() {
     return nextId;
 }
 
-
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
 const selectTipoPonto = document.getElementById("tipos-ponto");
 const comentarioPonto = document.getElementById("comentario-ponto");
+const divAnexoImagem = document.getElementById("div-anexo-imagem");
+const inputAnexoImagem = document.getElementById("anexo-imagem");
 
+// Função para mostrar/ocultar o campo de anexo de imagem
+selectTipoPonto.addEventListener("change", function() {
+    if (this.value === "falta") {
+        divAnexoImagem.style.display = "block";  // Mostra o campo de anexo de imagem
+    } else {
+        divAnexoImagem.style.display = "none";  // Esconde o campo de anexo de imagem
+    }
+});
 
 btnDialogBaterPonto.addEventListener("click", async () => {
     const dataPonto = document.getElementById("data-ponto").value;
     const typeRegister = document.getElementById("tipos-ponto").value;
     const comentario = document.getElementById("comentario-ponto").value.trim();
+    const anexoImagem = document.getElementById("anexo-imagem").files[0];  // Captura o arquivo de imagem
 
     if (!dataPonto) {
         alert("Por favor, escolha uma data e hora.");
@@ -105,7 +114,8 @@ btnDialogBaterPonto.addEventListener("click", async () => {
         "hora": selectedDate.toLocaleTimeString(),
         "localizacao": userCurrentPosition,
         "tipo": typeRegister,
-        "comentario": comentario 
+        "comentario": comentario,
+        "imagem": anexoImagem ? anexoImagem.name : null  // Se houver imagem, salva o nome dela
     };
 
     saveRegisterLocalStorage(ponto);
@@ -153,7 +163,6 @@ function register() {
         document.getElementById("dialog-last-register").textContent = lastRegisterText;
     }
 
-
     setInterval(() => {
         dialogHora.textContent = "Hora: " + getCurrentHour();
     }, 1000);
@@ -198,4 +207,4 @@ btnDataHoraAtual.addEventListener("click", () => {
 });
 
 printCurrentHour();
-setInterval(printCurrentHour, 1000);
+setInterval(printCurrentHour, 1000);  
