@@ -67,19 +67,18 @@ function getNextId() {
 
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
 const selectTipoPonto = document.getElementById("tipos-ponto");
-const DivcomentarioPonto = document.getElementById("div-comentario-ponto");
-const comentarioPonto = document.getElementById("comentario-ponto"); 
+const divComentarioPonto = document.getElementById("div-comentario-ponto");
+const comentarioPontoTextarea = document.getElementById("comentario-ponto-textarea");
 const divAnexoImagem = document.getElementById("div-anexo-imagem");
-const inputAnexoImagem = document.getElementById("anexo-imagem");
 
-// Função para mostrar/ocultar o campo de anexo de imagem
+// Função para mostrar/ocultar o campo de anexo de imagem e comentário
 selectTipoPonto.addEventListener("change", function() {
     if (this.value === "falta") {
         divAnexoImagem.style.display = "block";  // Mostra o campo de anexo de imagem
-        DivcomentarioPonto.style.display = "block"; // Mostra o campo de comentário para "Falta"
+        divComentarioPonto.style.display = "block"; // Mostra o campo de comentário para "Falta"
     } else {
         divAnexoImagem.style.display = "none";  // Esconde o campo de anexo de imagem
-        DivcomentarioPonto.style.display = "none"; // Esconde o campo de comentário para outros tipos de ponto
+        divComentarioPonto.style.display = "none"; // Esconde o campo de comentário para outros tipos de ponto
     }
 });
 
@@ -88,10 +87,11 @@ btnDialogBaterPonto.addEventListener("click", async () => {
     const typeRegister = document.getElementById("tipos-ponto").value;
     
     // Verifica se o campo de comentário está presente e captura seu valor
-    const comentarioElemento = document.getElementById("comentario-ponto");
-    const comentario = comentarioElemento && comentarioElemento.style.display !== 'none' ? comentarioElemento.value.trim() : null;
+    const comentario = comentarioPontoTextarea && divComentarioPonto.style.display !== 'none' ? comentarioPontoTextarea.value.trim() : null;
     
-    const anexoImagem = document.getElementById("anexo-imagem").files[0];  // Captura o arquivo de imagem
+    // Verifica se o input de imagem existe e captura o arquivo (anexoImagem)
+    const anexoImagemInput = document.getElementById("anexo-imagem");
+    const anexoImagem = anexoImagemInput ? anexoImagemInput.files[0] : null;  // Captura o arquivo de imagem ou null
 
     if (!dataPonto) {
         alert("Por favor, escolha uma data e hora.");
@@ -101,15 +101,20 @@ btnDialogBaterPonto.addEventListener("click", async () => {
     const selectedDate = new Date(dataPonto);
     const currentDate = new Date();
 
+    // Verifica se a data escolhida é futura
     if (selectedDate > currentDate) {
         alert("Você não pode registrar pontos em datas futuras.");
         return;
     }
 
+    // Verifica se o tipo de ponto é "Falta" e se o comentário foi preenchido
     if (typeRegister === "falta" && !comentario) {
         alert("Em caso de falta, escreva sua justificativa.");
         return;
     }
+
+    // Verifica se a data escolhida é uma data passada (anterior à data atual)
+    const dataPassada = selectedDate < currentDate.setHours(0, 0, 0, 0); // Ignora a hora ao comparar
 
     let userCurrentPosition = await getCurrentPosition();
 
@@ -122,7 +127,8 @@ btnDialogBaterPonto.addEventListener("click", async () => {
         "localizacao": userCurrentPosition,
         "tipo": typeRegister,
         "comentario": comentario ? comentario : null,
-        "imagem": anexoImagem ? anexoImagem.name : null  // Se houver imagem, salva o nome dela
+        "imagem": anexoImagem ? anexoImagem.name : null,  // Se houver imagem, salva o nome dela
+        "data_passada": dataPassada // Marca se a data é passada
     };
 
     saveRegisterLocalStorage(ponto);
@@ -214,4 +220,4 @@ btnDataHoraAtual.addEventListener("click", () => {
 });
 
 printCurrentHour();
-setInterval(printCurrentHour, 1000);  
+setInterval(printCurrentHour, 1000);

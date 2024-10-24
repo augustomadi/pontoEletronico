@@ -101,3 +101,10 @@
     padding: 20px;
     font-size: 1.3rem;
 }
+
+table img{
+    max-width: 100px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
