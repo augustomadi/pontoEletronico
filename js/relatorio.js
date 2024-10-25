@@ -8,22 +8,35 @@ function renderList(registros) {
 
         const imagemCell = registro.imagem 
             ? `<img src="${registro.imagem}" alt="Imagem" style="width: 100px; height: auto;">`
-            : "Nenhuma imagem";
+            : "-";
 
         // Verifica se o registro foi feito para uma data passada
         const dataPassadaText = registro.data_passada ? 'Sim' : 'Não';
+
+        // Adiciona o botão de apagar
+        const botaoApagar = `<button class="btn-apagar" data-id="${registro.id}">Apagar</button>`;
 
         row.innerHTML = `
             <td>${registro.id}</td>
             <td>${registro.data}</td>
             <td>${registro.hora}</td>
             <td>${registro.tipo}</td>
-            <td>${registro.comentario || "Nenhum comentário"}</td>
+            <td>${registro.justificativa || "-"}</td>
+            <td>${registro.comentario_opcional || "-"}</td>
             <td>${imagemCell}</td>
             <td>${dataPassadaText}</td>
+            <td>${botaoApagar}</td> <!-- Adiciona o botão na tabela -->
         `;
 
         tabelaBody.appendChild(row);
+    });
+
+    // Adiciona evento de clique para os botões de apagar
+    const botoesApagar = document.querySelectorAll(".btn-apagar");
+    botoesApagar.forEach(botao => {
+        botao.addEventListener("click", () => {
+            alert("Os registros não podem ser apagados.");
+        });
     });
 }
 

@@ -67,31 +67,42 @@ function getNextId() {
 
 const btnDialogBaterPonto = document.getElementById("btn-dialog-bater-ponto");
 const selectTipoPonto = document.getElementById("tipos-ponto");
-const divComentarioPonto = document.getElementById("div-comentario-ponto");
-const comentarioPontoTextarea = document.getElementById("comentario-ponto-textarea");
+const divComentarioPonto = document.getElementById("div-comentario-opcional");
+const comentarioPontoTextarea = document.getElementById("comentario-opcional-textarea");
 const divAnexoImagem = document.getElementById("div-anexo-imagem");
+const divJustificativaPonto = document.getElementById("div-justificativa-ponto");
+const justificativaPontoTextarea = document.getElementById("justificativa-ponto-textarea");
 
-// Função para mostrar/ocultar o campo de anexo de imagem e comentário
+// Função para mostrar/ocultar os campos
 selectTipoPonto.addEventListener("change", function() {
-    if (this.value === "falta") {
-        divAnexoImagem.style.display = "block";  // Mostra o campo de anexo de imagem
-        divComentarioPonto.style.display = "block"; // Mostra o campo de comentário para "Falta"
+    const typeRegister = selectTipoPonto.value;
+
+    // Sempre mostra o campo de comentário
+    divComentarioPonto.style.display = "block";
+
+    // Mostra o campo de justificativa apenas para "falta"
+    if (typeRegister === "falta") {
+        divJustificativaPonto.style.display = "block"; // Mostra o campo de justificativa
     } else {
-        divAnexoImagem.style.display = "none";  // Esconde o campo de anexo de imagem
-        divComentarioPonto.style.display = "none"; // Esconde o campo de comentário para outros tipos de ponto
+        divJustificativaPonto.style.display = "none"; // Esconde o campo de justificativa
+        justificativaPontoTextarea.value = "";  // Limpa o campo de justificativa se não for "falta"
     }
+
+    // Mostra o campo de imagem para todos os tipos
+    divAnexoImagem.style.display = "block"; 
 });
 
 btnDialogBaterPonto.addEventListener("click", async () => {
     const dataPonto = document.getElementById("data-ponto").value;
-    const typeRegister = document.getElementById("tipos-ponto").value;
-    
-    // Verifica se o campo de comentário está presente e captura seu valor
-    const comentario = comentarioPontoTextarea && divComentarioPonto.style.display !== 'none' ? comentarioPontoTextarea.value.trim() : null;
-    
+    const typeRegister = selectTipoPonto.value;
+
+    // Captura os valores dos campos de justificativa e comentário
+    const justificativa = (typeRegister === "falta") ? justificativaPontoTextarea.value.trim() : null;
+    const comentarioOpcional = comentarioPontoTextarea.value.trim();
+
     // Verifica se o input de imagem existe e captura o arquivo (anexoImagem)
     const anexoImagemInput = document.getElementById("anexo-imagem");
-    const anexoImagem = anexoImagemInput ? anexoImagemInput.files[0] : null;  // Captura o arquivo de imagem ou null
+    const anexoImagem = anexoImagemInput ? anexoImagemInput.files[0] : null;
 
     if (!dataPonto) {
         alert("Por favor, escolha uma data e hora.");
@@ -107,13 +118,12 @@ btnDialogBaterPonto.addEventListener("click", async () => {
         return;
     }
 
-    // Verifica se o tipo de ponto é "Falta" e se o comentário foi preenchido
-    if (typeRegister === "falta" && !comentario) {
+    // Verifica se o tipo de ponto é "Falta" e se a justificativa foi preenchida
+    if (typeRegister === "falta" && !justificativa) {
         alert("Em caso de falta, escreva sua justificativa.");
         return;
     }
 
-    // Verifica se a data escolhida é uma data passada (anterior à data atual)
     const dataPassada = selectedDate < currentDate.setHours(0, 0, 0, 0); // Ignora a hora ao comparar
 
     let userCurrentPosition = await getCurrentPosition();
@@ -126,7 +136,8 @@ btnDialogBaterPonto.addEventListener("click", async () => {
         "hora": selectedDate.toLocaleTimeString(),
         "localizacao": userCurrentPosition,
         "tipo": typeRegister,
-        "comentario": comentario ? comentario : null,
+        "justificativa": justificativa ? justificativa : null,
+        "comentario_opcional": comentarioOpcional ? comentarioOpcional : null,  // Adiciona o comentário opcional
         "imagem": anexoImagem ? anexoImagem.name : null,  // Se houver imagem, salva o nome dela
         "data_passada": dataPassada // Marca se a data é passada
     };

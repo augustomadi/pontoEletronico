@@ -31,36 +31,45 @@
       <button id="btn-bater-ponto">Bater ponto!</button>
     </div>
     <dialog id="dialog-ponto">
-        <p id="dialog-data"></p>
-        <p id="dialog-hora"></p>
+      <p id="dialog-data"></p>
+      <p id="dialog-hora"></p>
     
-        <label for="data-ponto">Escolha a data e hora:</label>
-        <input type="datetime-local" id="data-ponto" class="data-hora-selector">
-        <button id="btn-data-hora-atual">Agora</button>
+      <label for="data-ponto">Escolha a data e hora:</label>
+      <input type="datetime-local" id="data-ponto" class="data-hora-selector">
+      <button id="btn-data-hora-atual">Agora</button>
     
-        <select name="tipos-ponto" id="tipos-ponto" required>
-            <option value="entrada">Entrada</option>
-            <option value="intervalo">Intervalo</option>
-            <option value="volta-intervalo">Volta Intervalo</option>
-            <option value="saida">Saída</option>
-            <option value="falta">Falta</option>
-        </select>
-        
-        <div id="div-comentario-ponto" style="display: none;">
-          <label for="comentario-ponto-textarea">Digite sua justificativa:</label>
-          <textarea id="comentario-ponto-textarea" rows="4" placeholder="Adicione uma justificativa..."></textarea>
-        </div>
+      <select name="tipos-ponto" id="tipos-ponto" required>
+          <option value="entrada">Entrada</option>
+          <option value="intervalo">Intervalo</option>
+          <option value="volta-intervalo">Volta Intervalo</option>
+          <option value="saida">Saída</option>
+          <option value="falta">Falta</option>
+      </select>
     
-        <div id="div-anexo-imagem" style="display: none;">
-            <label for="anexo-imagem">Anexar imagem (opcional):</label>
-            <input type="file" id="anexo-imagem" accept="image/*">
-        </div>
+    <!-- Comentário opcional, visível em todos os tipos -->
+    <div id="div-comentario-opcional">
+        <label for="comentario-opcional-textarea">Comentário (opcional):</label>
+        <textarea id="comentario-opcional-textarea" rows="4" placeholder="Adicione um comentário..."></textarea>
+    </div>
+
+    <div id="div-justificativa-ponto" style="display: none;">
+      <label for="justificativa-ponto-textarea">Digite sua justificativa:</label>
+      <textarea id="justificativa-ponto-textarea" rows="4" placeholder="Adicione uma justificativa..." required></textarea>
+  </div>
+  
     
-        <button id="btn-dialog-bater-ponto">Registrar ponto</button>
+    <!-- Campo de imagem, visível em todos os tipos -->
+    <div id="div-anexo-imagem">
+        <label for="anexo-imagem">Anexar imagem (opcional):</label>
+        <input type="file" id="anexo-imagem" accept="image/*">
+    </div>
     
-        <p id="dialog-last-register"></p>
-        <button id="btn-dialog-fechar">X</button>
+      <button id="btn-dialog-bater-ponto">Registrar ponto</button>
+    
+      <p id="dialog-last-register"></p>
+      <button id="btn-dialog-fechar">X</button>
     </dialog>
+  
     <script src="js/index.js"></script>
   </body>
 </html>
