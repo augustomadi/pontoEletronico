@@ -10,34 +10,156 @@ function renderList(registros) {
             ? `<img src="${registro.imagem}" alt="Imagem" style="width: 100px; height: auto;">`
             : "-";
 
-        // Verifica se o registro foi feito para uma data passada
         const dataPassadaText = registro.data_passada ? 'Sim' : 'Não';
 
-        // Adiciona o botão de apagar
-        const botaoApagar = `<button class="btn-apagar" data-id="${registro.id}">Apagar</button>`;
+        // Botões de atualização ao lado de cada campo
+        const botaoAtualizarComentario = `<button class="btn-atualizar-comentario" data-id="${registro.id}">Atualizar</button>`;
+        const botaoAtualizarTipo = `<button class="btn-atualizar-tipo" data-id="${registro.id}">Atualizar</button>`;
+        const botaoAtualizarData = `<button class="btn-atualizar-data" data-id="${registro.id}">Atualizar</button>`;
+        const botaoAtualizarHora = `<button class="btn-atualizar-hora" data-id="${registro.id}">Atualizar</button>`;
+        const botaoApagar = `<button class="btn-apagar" data-id="${registro.id}">Apagar</button>`; // Botão de apagar
 
         row.innerHTML = `
             <td>${registro.id}</td>
-            <td>${registro.data}</td>
-            <td>${registro.hora}</td>
-            <td>${registro.tipo}</td>
+            <td>${registro.data} <br> ${botaoAtualizarData}</td>
+            <td>${registro.hora} <br> ${botaoAtualizarHora}</td>
+            <td>${registro.tipo} <br> ${botaoAtualizarTipo}</td>
             <td>${registro.justificativa || "-"}</td>
-            <td>${registro.comentario_opcional || "-"}</td>
+            <td>${registro.comentario_opcional || "-"} <br> ${botaoAtualizarComentario}</td>
             <td>${imagemCell}</td>
             <td>${dataPassadaText}</td>
-            <td>${botaoApagar}</td> <!-- Adiciona o botão na tabela -->
+            <td>${botaoApagar}</td>
         `;
 
         tabelaBody.appendChild(row);
     });
 
-    // Adiciona evento de clique para os botões de apagar
-    const botoesApagar = document.querySelectorAll(".btn-apagar");
-    botoesApagar.forEach(botao => {
+    // Adicionar eventos de clique para os botões
+
+    // Atualizar Comentário
+    document.querySelectorAll(".btn-atualizar-comentario").forEach(botao => {
+        botao.addEventListener("click", (event) => {
+            const id = event.target.getAttribute("data-id");
+            abrirDialogoAtualizarCampo(id, "comentario_opcional"); // Abre diálogo para atualizar o comentário
+        });
+    });
+
+    // Atualizar Tipo de Ponto
+    document.querySelectorAll(".btn-atualizar-tipo").forEach(botao => {
+        botao.addEventListener("click", (event) => {
+            const id = event.target.getAttribute("data-id");
+            abrirDialogoAtualizarCampo(id, "tipo"); // Abre diálogo para atualizar o tipo de ponto
+        });
+    });
+
+    // Atualizar Data
+    document.querySelectorAll(".btn-atualizar-data").forEach(botao => {
+        botao.addEventListener("click", (event) => {
+            const id = event.target.getAttribute("data-id");
+            abrirDialogoAtualizarCampo(id, "data"); // Abre diálogo para atualizar a data
+        });
+    });
+
+    // Atualizar Hora
+    document.querySelectorAll(".btn-atualizar-hora").forEach(botao => {
+        botao.addEventListener("click", (event) => {
+            const id = event.target.getAttribute("data-id");
+            abrirDialogoAtualizarCampo(id, "hora"); // Abre diálogo para atualizar a hora
+        });
+    });
+
+    // Adicionar eventos de clique para o botão de apagar (apenas alerta)
+    document.querySelectorAll(".btn-apagar").forEach(botao => {
         botao.addEventListener("click", () => {
             alert("Os registros não podem ser apagados.");
         });
     });
+}
+
+// Função para abrir o diálogo de atualização com input de data/hora
+// Função para abrir o diálogo de atualização com input de data/hora ou tipo
+function abrirDialogoAtualizarCampo(id, campo) {
+    const registros = JSON.parse(localStorage.getItem("register")) || [];
+    const registro = registros.find(r => r.id == id);
+
+    if (registro) {
+        const dialogAtualizacao = document.getElementById("dialog-atualizar");
+        dialogAtualizacao.showModal();
+
+        const novoValorInput = document.getElementById("novo-valor");
+
+        if (campo === "data") {
+            novoValorInput.setAttribute("type", "date");
+            novoValorInput.value = new Date(registro.data.split("/").reverse().join("-")).toISOString().split('T')[0];
+        } else if (campo === "hora") {
+            novoValorInput.setAttribute("type", "time");
+            novoValorInput.value = registro.hora;
+        } else if (campo === "tipo") {
+            // Cria o select para os tipos de ponto
+            const select = document.createElement("select");
+            select.id = "novo-tipo";
+
+            const tipos = ["Entrada", "Intervalo", "Volta Intervalo", "Saída", "Falta"];
+            tipos.forEach(tipo => {
+                const option = document.createElement("option");
+                option.value = tipo.toLowerCase();
+                option.text = tipo;
+                if (registro.tipo === tipo.toLowerCase()) {
+                    option.selected = true;
+                }
+                select.appendChild(option);
+            });
+
+            // Substitui o input atual pelo select
+            const inputContainer = novoValorInput.parentNode;
+            inputContainer.replaceChild(select, novoValorInput);
+        } else {
+            novoValorInput.setAttribute("type", "text");
+            novoValorInput.value = registro[campo];
+        }
+
+        // Ação de confirmação
+        document.getElementById("btn-confirmar-atualizacao").onclick = () => {
+            let novoValor;
+            if (campo === "tipo") {
+                const selectTipo = document.getElementById("novo-tipo");
+                novoValor = selectTipo.value;
+
+                // Verifica se o tipo foi alterado de "falta" para outro e apaga a justificativa
+                if (registro.tipo === "falta" && novoValor !== "falta") {
+                    registro.justificativa = null;  // Apaga a justificativa se o novo tipo não for "falta"
+                }
+            } else {
+                novoValor = novoValorInput.value;
+            }
+
+            if (novoValor && confirm("Deseja atualizar o valor?")) {
+                atualizarCampoRegistro(id, campo, novoValor);
+                dialogAtualizacao.close();
+            }
+        };
+
+        document.getElementById("btn-cancelar-atualizacao").onclick = () => {
+            dialogAtualizacao.close();
+        };
+    }
+}
+
+// Função para atualizar o registro no LocalStorage
+function atualizarCampoRegistro(id, campo, novoValor) {
+    const registros = JSON.parse(localStorage.getItem("register")) || [];
+    const registro = registros.find(r => r.id == id);
+
+    if (registro) {
+        registro[campo] = novoValor;
+
+        // Atualiza o LocalStorage com o novo valor
+        localStorage.setItem("register", JSON.stringify(registros));
+        alert("Registro atualizado com sucesso!");
+
+        // Re-renderiza a lista de registros
+        renderList(registros);
+    }
 }
 
 // Função para aplicar o filtro de datas
@@ -63,7 +185,7 @@ function aplicarFiltro() {
     renderList(registrosFiltrados);
 }
 
-// Adiciona o evento de clique no botão de filtro
+// Adicionar evento de clique no botão de filtro
 document.getElementById("btn-filtrar").addEventListener("click", aplicarFiltro);
 
 // Renderiza todos os registros ao carregar a página

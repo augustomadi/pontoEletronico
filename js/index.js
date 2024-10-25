@@ -92,21 +92,37 @@ selectTipoPonto.addEventListener("change", function() {
     divAnexoImagem.style.display = "block"; 
 });
 
+// Função para converter a imagem em Base64 e salvar no localStorage
+function toBase64(file) {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+    });
+}
+
 btnDialogBaterPonto.addEventListener("click", async () => {
     const dataPonto = document.getElementById("data-ponto").value;
     const typeRegister = selectTipoPonto.value;
+    
+    // Verificação se a data foi preenchida
+    if (!dataPonto) {
+        alert("Por favor, escolha uma data e hora antes de registrar o ponto.");
+        return; // Interrompe o registro se a data estiver vazia
+    }
 
     // Captura os valores dos campos de justificativa e comentário
     const justificativa = (typeRegister === "falta") ? justificativaPontoTextarea.value.trim() : null;
     const comentarioOpcional = comentarioPontoTextarea.value.trim();
-
+    
     // Verifica se o input de imagem existe e captura o arquivo (anexoImagem)
     const anexoImagemInput = document.getElementById("anexo-imagem");
     const anexoImagem = anexoImagemInput ? anexoImagemInput.files[0] : null;
 
-    if (!dataPonto) {
-        alert("Por favor, escolha uma data e hora.");
-        return;
+    let base64Image = null;
+    if (anexoImagem) {
+        base64Image = await toBase64(anexoImagem); // Converte a imagem para Base64
     }
 
     const selectedDate = new Date(dataPonto);
@@ -138,7 +154,7 @@ btnDialogBaterPonto.addEventListener("click", async () => {
         "tipo": typeRegister,
         "justificativa": justificativa ? justificativa : null,
         "comentario_opcional": comentarioOpcional ? comentarioOpcional : null,  // Adiciona o comentário opcional
-        "imagem": anexoImagem ? anexoImagem.name : null,  // Se houver imagem, salva o nome dela
+        "imagem": base64Image,  // Salva a imagem convertida em Base64
         "data_passada": dataPassada // Marca se a data é passada
     };
 
