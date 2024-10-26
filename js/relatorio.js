@@ -78,6 +78,7 @@ function renderList(registros) {
 
 // Função para abrir o diálogo de atualização com input de data/hora
 // Função para abrir o diálogo de atualização com input de data/hora ou tipo
+// Função para abrir o diálogo de atualização com input de data/hora ou tipo
 function abrirDialogoAtualizarCampo(id, campo) {
     const registros = JSON.parse(localStorage.getItem("register")) || [];
     const registro = registros.find(r => r.id == id);
@@ -124,11 +125,6 @@ function abrirDialogoAtualizarCampo(id, campo) {
             if (campo === "tipo") {
                 const selectTipo = document.getElementById("novo-tipo");
                 novoValor = selectTipo.value;
-
-                // Verifica se o tipo foi alterado de "falta" para outro e apaga a justificativa
-                if (registro.tipo === "falta" && novoValor !== "falta") {
-                    registro.justificativa = null;  // Apaga a justificativa se o novo tipo não for "falta"
-                }
             } else {
                 novoValor = novoValorInput.value;
             }
@@ -151,7 +147,12 @@ function atualizarCampoRegistro(id, campo, novoValor) {
     const registro = registros.find(r => r.id == id);
 
     if (registro) {
-        registro[campo] = novoValor;
+        // Se o campo a ser atualizado é o tipo, e o tipo anterior era "falta" e está sendo alterado para outro tipo, apaga a justificativa
+        if (campo === "tipo" && registro.tipo === "falta" && novoValor !== "falta") {
+            registro.justificativa = null; // Remove a justificativa
+        }
+
+        registro[campo] = novoValor; // Atualiza o campo com o novo valor
 
         // Atualiza o LocalStorage com o novo valor
         localStorage.setItem("register", JSON.stringify(registros));
@@ -185,7 +186,7 @@ function aplicarFiltro() {
     renderList(registrosFiltrados);
 }
 
-// Adicionar evento de clique no botão de filtro
+// Adiciona o evento de clique no botão de filtro
 document.getElementById("btn-filtrar").addEventListener("click", aplicarFiltro);
 
 // Renderiza todos os registros ao carregar a página
