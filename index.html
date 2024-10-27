@@ -1,83 +1,90 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sistema de Controle de Ponto</title>
-  <link rel="stylesheet" href="css/style.css" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap"
-    rel="stylesheet"
-  />
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sistema de Controle de Ponto</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Nanum+Gothic+Coding:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="header">
+      <h1>Bater Ponto</h1>
+      <a href="RelatorioPontos.html" target="_blank" class="botao-relatorio"
+        >Relatório</a
+      >
+    </header>
 
-  <!-- Cabeçalho -->
-  <header class="header">
-    <h1>Bater Ponto</h1>
-    <a href="RelatorioPontos.html" target="_blank" class="botao-relatorio">Relatório</a>
-  </header>
-
-  <!-- Alerta de ponto registrado -->
-  <div id="alerta-registro-ponto" class="hidden">
-    <p>Ponto registrado com sucesso</p>
-    <button id="alerta-registro-ponto-fechar">X</button>
-  </div>
-
-  <!-- Centralizar conteúdo principal -->
-  <div class="central-content">
-    <div class="data-hora">
-      <p id="dia-semana"></p>
-      <p id="dia-mes-ano"></p>
-      <p id="hora-min-seg"></p>
+    <div id="alerta-registro-ponto" class="hidden">
+      <p>Ponto registrado com sucesso</p>
+      <button id="alerta-registro-ponto-fechar">X</button>
     </div>
 
-    <div id="div-btn-bater-ponto">
-      <button id="btn-bater-ponto">Bater ponto!</button>
-    </div>
-  </div>
+    <div class="central-content">
+      <div class="data-hora">
+        <p id="dia-semana"></p>
+        <p id="dia-mes-ano"></p>
+        <p id="hora-min-seg"></p>
+      </div>
 
-  <dialog id="dialog-ponto">
-    <p id="dialog-data"></p>
-    <p id="dialog-hora"></p>
-
-    <label for="data-ponto">Escolha a data e hora:</label>
-    <input type="datetime-local" id="data-ponto" class="data-hora-selector">
-    <button id="btn-data-hora-atual">Agora</button>
-
-    <select name="tipos-ponto" id="tipos-ponto" required>
-      <option value="entrada">Entrada</option>
-      <option value="intervalo">Intervalo</option>
-      <option value="volta-intervalo">Volta Intervalo</option>
-      <option value="saida">Saída</option>
-      <option value="falta">Falta</option>
-    </select>
-
-    <!-- Comentário opcional, visível em todos os tipos -->
-    <div id="div-comentario-opcional">
-      <label for="comentario-opcional-textarea">Comentário (opcional):</label>
-      <textarea id="comentario-opcional-textarea" rows="4" placeholder="Adicione um comentário..."></textarea>
+      <div id="div-btn-bater-ponto">
+        <button id="btn-bater-ponto">Bater ponto!</button>
+      </div>
     </div>
 
-    <div id="div-justificativa-ponto" style="display: none;">
-      <label for="justificativa-ponto-textarea">Digite sua justificativa:</label>
-      <textarea id="justificativa-ponto-textarea" rows="4" placeholder="Adicione uma justificativa..." required></textarea>
-    </div>
+    <dialog id="dialog-ponto">
+      <p id="dialog-data"></p>
+      <p id="dialog-hora"></p>
 
-    <!-- Campo de imagem, visível em todos os tipos -->
-    <div id="div-anexo-imagem">
-      <label for="anexo-imagem">Anexar imagem (opcional):</label>
-      <input type="file" id="anexo-imagem" accept="image/*">
-    </div>
+      <label for="data-ponto">Escolha a data e hora:</label>
+      <input type="datetime-local" id="data-ponto" class="data-hora-selector" />
+      <button id="btn-data-hora-atual">Agora</button>
 
-    <button id="btn-dialog-bater-ponto">Registrar ponto</button>
+      <select name="tipos-ponto" id="tipos-ponto" required>
+        <option value="entrada">Entrada</option>
+        <option value="intervalo">Intervalo</option>
+        <option value="volta-intervalo">Volta Intervalo</option>
+        <option value="saida">Saída</option>
+        <option value="falta">Falta</option>
+      </select>
 
-    <p id="dialog-last-register"></p>
-    <button id="btn-dialog-fechar">X</button>
-  </dialog>
+      <div id="div-comentario-opcional">
+        <label for="comentario-opcional-textarea">Comentário (opcional):</label>
+        <textarea
+          id="comentario-opcional-textarea"
+          rows="4"
+          placeholder="Adicione um comentário..."
+        ></textarea>
+      </div>
 
-  <script src="js/index.js"></script>
-</body>
+      <div id="div-justificativa-ponto" style="display: none">
+        <label for="justificativa-ponto-textarea"
+          >Digite sua justificativa:</label
+        >
+        <textarea
+          id="justificativa-ponto-textarea"
+          rows="4"
+          placeholder="Adicione uma justificativa..."
+          required
+        ></textarea>
+      </div>
+
+      <div id="div-anexo-imagem">
+        <label for="anexo-imagem">Anexar imagem (opcional):</label>
+        <input type="file" id="anexo-imagem" accept="image/*" />
+      </div>
+
+      <button id="btn-dialog-bater-ponto">Registrar ponto</button>
+
+      <p id="dialog-last-register"></p>
+      <button id="btn-dialog-fechar">X</button>
+    </dialog>
+
+    <script src="js/index.js"></script>
+  </body>
 </html>

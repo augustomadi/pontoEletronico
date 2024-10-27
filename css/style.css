@@ -1,218 +1,206 @@
-/* Reset de estilos gerais */
 * {
-    font-family: Arial, sans-serif;
-    font-style: normal;
-    font-weight: bold;
-    box-sizing: border-box;
+  font-family: Arial, sans-serif;
+  font-style: normal;
+  font-weight: bold;
+  box-sizing: border-box;
 }
 
-/* Estilo geral da página */
 body {
-    background-color: #111827;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0;
-    padding: 0;
-    height: 100vh;
+  background-color: #111827;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  height: 100vh;
 }
 
-/* Cabeçalho da página */
 .header {
-    width: 100%;
-    background-color: #1F2937;
-    padding: 20px 40px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: #ffffff;
-    position: fixed;
-    top: 0;
-    left: 0;
+  width: 100%;
+  background-color: #1f2937;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 
 .header h1 {
-    margin: 0;
-    font-size: 24px;
+  margin: 0;
+  font-size: 24px;
 }
 
 .botao-relatorio {
-    background-color: #2563EB;
-    color: #ffffff;
-    padding: 10px 20px;
-    border-radius: 5px;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.3s;
+  background-color: #2563eb;
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
 }
 
 .botao-relatorio:hover {
-    background-color: #1D4ED8;
-}   
+  background-color: #1d4ed8;
+}
 
-/* Alerta de ponto registrado */
 #alerta-registro-ponto {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: green;
-    padding: 20px;
-    color: white;
-    border-radius: 5px;
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background-color: green;
+  padding: 20px;
+  color: white;
+  border-radius: 5px;
 }
 
 #alerta-registro-ponto p {
-    margin: 0;
+  margin: 0;
 }
 
 #alerta-registro-ponto-fechar {
-    background: transparent;
-    border: none;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
+  background: transparent;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-/* Centralização dos elementos */
 .central-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 
-/* Estilos para a data e hora */
-.data
-
-.data-hora {
-    text-align: center;
-    margin-top: 20px;
+.data .data-hora {
+  text-align: center;
+  margin-top: 20px;
 }
 
 .data-hora p {
-    margin: 0;
-    font-size: 1.5rem;
-    color: #9CA3AF;
+  margin: 0;
+  font-size: 1.5rem;
+  color: #9ca3af;
 }
 
 #dia-semana {
-    font-size: 2rem;
-    font-weight: bold;
-    color: #FFFFFF;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ffffff;
 }
 
 #dia-mes-ano {
-    font-size: 1.8rem;
-    color: #D1D5DB;
-    margin-top: 5px;
+  font-size: 1.8rem;
+  color: #d1d5db;
+  margin-top: 5px;
 }
 
 #hora-min-seg {
-    font-size: 1.6rem;
-    color: #6B7280;
-    margin-top: 5px;
+  font-size: 1.6rem;
+  color: #6b7280;
+  margin-top: 5px;
 }
 
-/* Estilo do botão de bater ponto */
 #div-btn-bater-ponto {
-    margin-top: 30px;
+  margin-top: 30px;
 }
 
 #btn-bater-ponto {
-    padding: 15px 40px;
-    background-color: #3B82F6;
-    color: white;
-    font-size: 1.5rem;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s, transform 0.3s;
-    box-shadow: 0px 4px 8px rgba(59, 130, 246, 0.2);
+  padding: 15px 40px;
+  background-color: #3b82f6;
+  color: white;
+  font-size: 1.5rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  box-shadow: 0px 4px 8px rgba(59, 130, 246, 0.2);
 }
 
 #btn-bater-ponto:hover {
-    background-color: #2563EB;
-    transform: scale(1.05);
+  background-color: #2563eb;
+  transform: scale(1.05);
 }
 
 #btn-bater-ponto:active {
-    background-color: #1D4ED8;
-    transform: scale(1.02);
+  background-color: #1d4ed8;
+  transform: scale(1.02);
 }
 
-/* Modal de registro de ponto */
 #dialog-ponto {
-    background-color: #1F2937;
-    padding: 20px;
-    border-radius: 8px;
-    color: white;
-    width: 80%;
-    max-width: 400px;
-    border: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
+  background-color: #1f2937;
+  padding: 20px;
+  border-radius: 8px;
+  color: white;
+  width: 80%;
+  max-width: 400px;
+  border: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
-#dialog-ponto label, 
-#dialog-ponto select, 
-#dialog-ponto input, 
+#dialog-ponto label,
+#dialog-ponto select,
+#dialog-ponto input,
 #dialog-ponto textarea {
-    font-size: 1rem;
-    margin-bottom: 10px;
-    width: 100%;
-    padding: 10px;
-    color: #ffffff;
-    background-color: #374151;
-    border: none;
-    border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  width: 100%;
+  padding: 10px;
+  color: #ffffff;
+  background-color: #374151;
+  border: none;
+  border-radius: 5px;
 }
 
-#btn-data-hora-atual, 
-#btn-dialog-bater-ponto, 
+#btn-data-hora-atual,
+#btn-dialog-bater-ponto,
 #btn-dialog-fechar {
-    padding: 10px 20px;
-    font-size: 1.1rem;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  padding: 10px 20px;
+  font-size: 1.1rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 #btn-dialog-bater-ponto {
-    background-color: #4CAF50;
-    color: white;
-    margin-top: 15px;
+  background-color: #4caf50;
+  color: white;
+  margin-top: 15px;
 }
 
 #btn-dialog-bater-ponto:hover {
-    background-color: #3B8D40;
+  background-color: #3b8d40;
 }
 
 #btn-dialog-fechar {
-    background: #DC2626;
-    color: white;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    cursor: pointer;
-    border-radius: 50%;
-    width: 30px;
-    height: 30px;
-    font-weight: bold;
-    border: none;
+  background: #dc2626;
+  color: white;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-weight: bold;
+  border: none;
 }
 
 #btn-dialog-fechar:hover {
-    background-color: #B91C1C;
+  background-color: #b91c1c;
 }
 
-/* Estilos para o alerta */
 #alerta-registro-ponto.hidden {
-    display: none;
+  display: none;
 }
 
 #alerta-registro-ponto.show {
-    display: block;
+  display: block;
 }
-

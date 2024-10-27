@@ -1,177 +1,174 @@
-/* Fundo da página */
 body {
-    background-color: #111827;
-    color: #ffffff;
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  background-color: #111827;
+  color: #ffffff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-/* Estilo do cabeçalho */
 .header {
-    background-color: #1F2937;
-    width: 100%;
-    margin-bottom: 15px;
+  background-color: #1f2937;
+  width: 100%;
+  margin-bottom: 15px;
 }
 
 .header-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 8px 40px; /* Espaçamento interno para afastar o conteúdo das bordas */
-    color: #ffffff;
-    font-size: 15px;
-    font-weight: bold;
-    box-sizing: border-box;
-    max-width: 1200px; /* Largura máxima opcional */
-    margin: 0 auto; /* Centraliza o conteúdo dentro do header */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 40px;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: bold;
+  box-sizing: border-box;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Estilo do botão Voltar */
 .botao-voltar {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
 .botao-voltar:hover {
-    background-color: #0056b3;
+  background-color: #0056b3;
 }
 
-/* Container principal */
 .main-container {
-    width: 100%;
-    max-width: 1200px; /* Limite opcional para largura */
-    padding: 0 20px; /* Espaçamento nas laterais para o conteúdo principal */
-    box-sizing: border-box;
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+  box-sizing: border-box;
 }
 
-/* Container da tabela */
 .tabela-container {
-    background-color: #1F2937;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 100%; /* Para manter a largura responsiva */
-    overflow-x: auto;
+  background-color: #1f2937;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 100%;
+  overflow-x: auto;
 }
 
-/* Estilo da tabela */
 #tabela-registros {
-    width: 100%;
-    border-collapse: collapse;
+  width: 100%;
+  border-collapse: collapse;
 }
 
-#tabela-registros th, #tabela-registros td {
-    padding: 10px;
-    text-align: center;
-    border-bottom: 1px solid #374151;
+#tabela-registros th,
+#tabela-registros td {
+  padding: 10px;
+  text-align: center;
+  border-bottom: 1px solid #374151;
 }
 
 #tabela-registros th {
-    background-color: #1F2937;
-    color: #9CA3AF;
-    font-weight: normal;
+  background-color: #1f2937;
+  color: #9ca3af;
+  font-weight: normal;
 }
 
 #tabela-registros tr:nth-child(even) {
-    background-color: #111827;
+  background-color: #111827;
 }
 
 #tabela-registros tr:last-child td {
-    border-bottom: none;
+  border-bottom: none;
 }
 
-/* Botões de ação */
 button {
-    cursor: pointer;
-    border: none;
-    padding: 8px 12px;
-    border-radius: 5px;
-    color: #ffffff;
-    font-weight: bold;
+  cursor: pointer;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  color: #ffffff;
+  font-weight: bold;
 }
 
 button#btn-filtrar {
-    background-color: #2563EB;
+  background-color: #2563eb;
 }
 
 button#btn-filtrar:hover {
-    background-color: #1D4ED8;
+  background-color: #1d4ed8;
 }
 
-/* Botão de atualização azul */
-button.btn-atualizar-comentario, button.btn-atualizar-tipo, button.btn-atualizar-data, button.btn-atualizar-hora {
-    background-color: #2563EB;
-    margin-top: 5px;
+button.btn-atualizar-comentario,
+button.btn-atualizar-tipo,
+button.btn-atualizar-data,
+button.btn-atualizar-hora {
+  background-color: #2563eb;
+  margin-top: 5px;
 }
 
-button.btn-atualizar-comentario:hover, button.btn-atualizar-tipo:hover, button.btn-atualizar-data:hover, button.btn-atualizar-hora:hover {
-    background-color: #1D4ED8;
+button.btn-atualizar-comentario:hover,
+button.btn-atualizar-tipo:hover,
+button.btn-atualizar-data:hover,
+button.btn-atualizar-hora:hover {
+  background-color: #1d4ed8;
 }
 
-/* Botão de apagar vermelho */
 button.btn-apagar {
-    background-color: #DC2626;
+  background-color: #dc2626;
 }
 
 button.btn-apagar:hover {
-    background-color: #B91C1C;
+  background-color: #b91c1c;
 }
 
-/* Modal de atualização */
 dialog {
-    padding: 20px;
-    border: none;
-    border-radius: 8px;
-    background-color: #1F2937;
-    color: #ffffff;
+  padding: 20px;
+  border: none;
+  border-radius: 8px;
+  background-color: #1f2937;
+  color: #ffffff;
 }
-  
+
 dialog label {
-    font-weight: bold;
+  font-weight: bold;
 }
-  
+
 dialog input {
-    margin-top: 10px;
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #6B7280;
-    width: 100%;
+  margin-top: 10px;
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #6b7280;
+  width: 100%;
 }
-  
+
 menu button {
-    background-color: #2563EB;
-    margin: 10px 5px 0;
+  background-color: #2563eb;
+  margin: 10px 5px 0;
 }
 
 menu button#btn-cancelar-atualizacao {
-    background-color: #DC2626;
+  background-color: #dc2626;
 }
 
 menu button:hover {
-    opacity: 0.9;
+  opacity: 0.9;
 }
 
-/* Estilo do formulário de filtro */
 .filtro-container {
-    color: #ffffff;
-    margin-bottom: 20px;
-    text-align: center;
-}
-  
-#filtro-periodo label {
-    margin: 0 10px;
+  color: #ffffff;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-#filtro-periodo input, #filtro-periodo button {
-    margin: 5px 0;
-    padding: 5px 10px;
-    border-radius: 5px;
-    border: 1px solid #374151;
+#filtro-periodo label {
+  margin: 0 10px;
+}
+
+#filtro-periodo input,
+#filtro-periodo button {
+  margin: 5px 0;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: 1px solid #374151;
 }
