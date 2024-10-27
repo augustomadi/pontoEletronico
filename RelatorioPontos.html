@@ -1,72 +1,63 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Relatório de Pontos</title>
-    <link rel="stylesheet" href="css/relatorio.css" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Relatório de Pontos</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/relatorio.css" />
 </head>
 <body>
-    <!-- Cabeçalho da página -->
-    <header class="header">
-        <div class="header-content">
-            <h1>Relatório de Pontos</h1>
-            <button class="botao-voltar" onclick="window.location.href='index.html'">Voltar para a Página Inicial</button>
-        </div>
-    </header>
 
-    <!-- Container principal -->
-    <div class="main-container">
-        <!-- Filtro por período -->
-        <section class="filtro-container">
-            <h2>Filtrar por Período</h2>
-            <form id="filtro-periodo">
-                <label for="data-inicial">Data Inicial:</label>
-                <input type="date" id="data-inicial" />
+  <!-- Cabeçalho -->
+  <header class="header">
+    <h1>Relatório de Pontos</h1>
+    <a href="index.html" class="botao-voltar">Voltar para a Página Inicial</a>
+  </header>
 
-                <label for="data-final">Data Final:</label>
-                <input type="date" id="data-final" />
+  <h2>Filtrar por Período</h2>
+  <form id="filtro-periodo">
+    <label for="data-inicial">Data Inicial:</label>
+    <input type="date" id="data-inicial" />
 
-                <button type="button" id="btn-filtrar">Filtrar</button>
-            </form>
-        </section>
+    <label for="data-final">Data Final:</label>
+    <input type="date" id="data-final" />
 
-        <!-- Tabela de registros -->
-        <section class="tabela-container">
-            <table id="tabela-registros">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Data</th>
-                        <th>Hora</th>
-                        <th>Tipo</th>
-                        <th>Justificativa</th>
-                        <th>Comentário</th>
-                        <th>Imagem</th>
-                        <th>Data Passada</th>
-                        <th>Ação</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- As linhas serão preenchidas dinamicamente pelo JavaScript -->
-                </tbody>
-            </table>
-        </section>
+    <button type="button" id="btn-filtrar">Filtrar</button>
+  </form>
 
-        <!-- Modal para atualizar dados -->
-        <dialog id="dialog-atualizar">
-            <form method="dialog">
-                <label for="novo-valor">Atualize o valor:</label>
-                <input id="novo-valor" type="text" />
+  <table id="tabela-registros">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Data</th>
+        <th>Hora</th>
+        <th>Tipo</th>
+        <th>Justificativa</th>
+        <th>Comentário</th>
+        <th>Imagem</th>
+        <th>Data Passada</th>
+        <th>Ação</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- As linhas serão preenchidas dinamicamente pelo JavaScript -->
+    </tbody>
+  </table>
 
-                <menu>
-                    <button id="btn-confirmar-atualizacao">Confirmar</button>
-                    <button id="btn-cancelar-atualizacao">Cancelar</button>
-                </menu>
-            </form>
-        </dialog>
-    </div>
+  <!-- Modal para atualizar data, hora e outros campos -->
+  <dialog id="dialog-atualizar">
+    <form method="dialog">
+      <label for="novo-valor">Atualize o valor:</label>
+      <input id="novo-valor" type="text" />
 
-    <script src="js/relatorio.js"></script>
+      <menu>
+        <button id="btn-confirmar-atualizacao">Confirmar</button>
+        <button id="btn-cancelar-atualizacao">Cancelar</button>
+      </menu>
+    </form>
+  </dialog>
+
+  <script src="js/relatorio.js"></script>
 </body>
 </html>

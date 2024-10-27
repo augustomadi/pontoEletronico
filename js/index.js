@@ -27,6 +27,13 @@ const dialogHora = document.getElementById("dialog-hora");
 
 const divAlertaRegistroPonto = document.getElementById("alerta-registro-ponto");
 
+// Função para fechar o alerta
+const btnCloseAlertRegister = document.getElementById("alerta-registro-ponto-fechar");
+btnCloseAlertRegister.addEventListener("click", () => {
+    divAlertaRegistroPonto.classList.remove("show");
+    divAlertaRegistroPonto.classList.add("hidden");
+});
+
 diaSemana.textContent = getWeekDay();
 diaMesAno.textContent = getCurrentDate();
 
@@ -44,12 +51,6 @@ async function getCurrentPosition() {
         });
     });
 }
-
-const btnCloseAlertRegister = document.getElementById("alerta-registro-ponto-fechar");
-btnCloseAlertRegister.addEventListener("click", () => {
-    divAlertaRegistroPonto.classList.remove("show");
-    divAlertaRegistroPonto.classList.add("hidden");
-});
 
 function getNextId() {
     let lastId = localStorage.getItem("lastId");
@@ -92,7 +93,6 @@ selectTipoPonto.addEventListener("change", function() {
     divAnexoImagem.style.display = "block"; 
 });
 
-// Função para converter a imagem em Base64 e salvar no localStorage
 function toBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -105,42 +105,36 @@ function toBase64(file) {
 btnDialogBaterPonto.addEventListener("click", async () => {
     const dataPonto = document.getElementById("data-ponto").value;
     const typeRegister = selectTipoPonto.value;
-    
-    // Verificação se a data foi preenchida
+
     if (!dataPonto) {
         alert("Por favor, escolha uma data e hora antes de registrar o ponto.");
-        return; // Interrompe o registro se a data estiver vazia
+        return;
     }
 
-    // Captura os valores dos campos de justificativa e comentário
     const justificativa = (typeRegister === "falta") ? justificativaPontoTextarea.value.trim() : null;
     const comentarioOpcional = comentarioPontoTextarea.value.trim();
-    
-    // Verifica se o input de imagem existe e captura o arquivo (anexoImagem)
     const anexoImagemInput = document.getElementById("anexo-imagem");
     const anexoImagem = anexoImagemInput ? anexoImagemInput.files[0] : null;
 
     let base64Image = null;
     if (anexoImagem) {
-        base64Image = await toBase64(anexoImagem); // Converte a imagem para Base64
+        base64Image = await toBase64(anexoImagem);
     }
 
     const selectedDate = new Date(dataPonto);
     const currentDate = new Date();
 
-    // Verifica se a data escolhida é futura
     if (selectedDate > currentDate) {
         alert("Você não pode registrar pontos em datas futuras.");
         return;
     }
 
-    // Verifica se o tipo de ponto é "Falta" e se a justificativa foi preenchida
     if (typeRegister === "falta" && !justificativa) {
         alert("Em caso de falta, escreva sua justificativa.");
         return;
     }
 
-    const dataPassada = selectedDate < currentDate.setHours(0, 0, 0, 0); // Ignora a hora ao comparar
+    const dataPassada = selectedDate < currentDate.setHours(0, 0, 0, 0);
 
     let userCurrentPosition = await getCurrentPosition();
 
@@ -153,9 +147,9 @@ btnDialogBaterPonto.addEventListener("click", async () => {
         "localizacao": userCurrentPosition,
         "tipo": typeRegister,
         "justificativa": justificativa ? justificativa : null,
-        "comentario_opcional": comentarioOpcional ? comentarioOpcional : null,  // Adiciona o comentário opcional
-        "imagem": base64Image,  // Salva a imagem convertida em Base64
-        "data_passada": dataPassada // Marca se a data é passada
+        "comentario_opcional": comentarioOpcional ? comentarioOpcional : null,
+        "imagem": base64Image,
+        "data_passada": dataPassada
     };
 
     saveRegisterLocalStorage(ponto);
@@ -165,6 +159,7 @@ btnDialogBaterPonto.addEventListener("click", async () => {
 
     dialogPonto.close();
 
+    // Exibir o alerta após o registro
     divAlertaRegistroPonto.classList.remove("hidden");
     divAlertaRegistroPonto.classList.add("show");
 
@@ -175,10 +170,9 @@ btnDialogBaterPonto.addEventListener("click", async () => {
 });
 
 function saveRegisterLocalStorage(register) {
-    const typeRegister = document.getElementById("tipos-ponto");
-    registerLocalStorage.push(register); // Array
+    registerLocalStorage.push(register);
     localStorage.setItem("register", JSON.stringify(registerLocalStorage));
-    localStorage.setItem("lastTypeRegister", typeRegister.value);
+    localStorage.setItem("lastTypeRegister", register.tipo);
 } 
 
 function getRegisterLocalStorage() {
